@@ -1,9 +1,13 @@
 import axios from "axios";
 
-const api = axios.create({
-  baseURL: import.meta.env.VITE_API_URL || "http://localhost:3001/api"
+
+
+const API = axios.create({
+  baseURL: "https://online-vehicle-rental-backend.onrender.com",
+  withCredentials: true,
 });
 
+export default API;
 api.interceptors.request.use((config) => {
   const userInfo = localStorage.getItem("userInfo");
   if (userInfo) {
