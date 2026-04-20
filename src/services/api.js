@@ -7,7 +7,6 @@ const API = axios.create({
   withCredentials: true,
 });
 
-export default API;
 api.interceptors.request.use((config) => {
   const userInfo = localStorage.getItem("userInfo");
   if (userInfo) {
@@ -16,4 +15,4 @@ api.interceptors.request.use((config) => {
   return config;
 });
 
-export default api;
+export default API;
