@@ -36,7 +36,7 @@ export default function BookingForm({ vehicle, onBooked }) {
 
       // 3. Open Razorpay
     const options = {
-  key: "rzp_test_Sf2kIFk2Jvg5ao",
+  key: import.meta.env.VITE_RAZORPAY_KEY,
   amount: order.amount,
   currency: order.currency,
   order_id: order.orderId,
@@ -63,30 +63,7 @@ export default function BookingForm({ vehicle, onBooked }) {
       toast.error("Payment verification failed");
     }
   },
-  modal: {
-    ondismiss: async function () {
-      try {
-        const { data: verifyData } = await api.post("/payments/verify", {
-          bookingId: booking._id,
-          paymentRecordId: order.paymentRecordId,
-          razorpay_order_id: order.orderId,
-          razorpay_payment_id: "test_payment_id",
-          razorpay_signature: "test_signature",
-          isTestBypass: true
-        });
-
-        if (verifyData.success) {
-          toast.success("Payment successful (test mode)");
-          onBooked?.(booking);
-        } else {
-          toast.error("Payment verification failed");
-        }
-      } catch (error) {
-        console.error(error);
-        toast.error(error.response?.data?.message || "Test payment failed");
-      }
-    }
-  },
+  
   theme: {
     color: "#3399cc",
   },
