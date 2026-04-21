@@ -1,7 +1,9 @@
 import axios from "axios";
 
+config.headers.Authorization = `Bearer ${JSON.parse(userInfo).token}`;
+
 const API = axios.create({
-  baseURL: import.meta.env.VITE_API_URL,
+  baseURL: `${import.meta.env.VITE_API_URL}/api`,
   withCredentials: true,
 });
 // ✅ use same variable name (API)
