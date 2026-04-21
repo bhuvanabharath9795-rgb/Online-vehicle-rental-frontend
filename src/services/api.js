@@ -4,7 +4,6 @@ const API = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
   withCredentials: true,
 });
-
 // ✅ use same variable name (API)
 API.interceptors.request.use((config) => {
   const userInfo = localStorage.getItem("userInfo");
