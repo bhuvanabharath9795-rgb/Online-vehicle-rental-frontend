@@ -15,7 +15,7 @@ import AdminPage from "./pages/AdminPage";
 import AddVehiclePage from "./pages/AddVehiclePage";
 import MyReservationsPage from "./pages/MyReservationsPage";
 import PaymentHistoryPage from "./pages/PaymentHistoryPage";
-import MyReviewsPage from "./pages/MyReviewsPage";
+import myReviewsPage from "./pages/myReviewsPage";
 
 export default function App() {
   const { userInfo } = useAuth();
