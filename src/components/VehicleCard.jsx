@@ -1,11 +1,12 @@
 import { Link } from "react-router-dom";
 
 export default function VehicleCard({ vehicle }) {
-  const vehicleName =
-    vehicle.title ||
-    vehicle.name ||
-    `${vehicle.make || vehicle.brand || ""} ${vehicle.model || ""}`.trim() ||
-    "Vehicle";
+ const vehicleName =
+  vehicle.title ||
+  vehicle.name ||
+  vehicle.type ||
+  `${vehicle.make || vehicle.brand || ""} ${vehicle.model || ""}`.trim() ||
+  "Vehicle";
 
   const vehicleImage =
     vehicle.image ||
