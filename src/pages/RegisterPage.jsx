@@ -11,6 +11,26 @@ export default function RegisterPage() {
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    if (!form.name.trim()) {
+  toast.error("Name is required");
+  return;
+}
+
+if (!form.email.includes("@")) {
+  toast.error("Enter a valid email");
+  return;
+}
+
+if (form.password.length < 6) {
+  toast.error("Password must be at least 6 characters");
+  return;
+}
+
+if (!/^[0-9]{10}$/.test(form.phone)) {
+  toast.error("Phone number must be 10 digits");
+  return;
+}
     try {
       const { data } = await api.post("/auth/register", form);
       setUserInfo(data);

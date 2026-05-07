@@ -9,11 +9,31 @@ export default function BookingForm({ vehicle, onBooked }) {
     pickupLocation: vehicle?.location || "",
     dropLocation: vehicle?.location || "",
   });
-
+     const today = new Date().toISOString().split("T")[0];
   const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
+
+    const start = new Date(form.startDate);
+const end = new Date(form.endDate);
+const today = new Date();
+today.setHours(0, 0, 0, 0);
+
+if (start < today) {
+  toast.error("Start date cannot be in the past");
+  return;
+}
+
+if (end <= start) {
+  toast.error("End date must be after start date");
+  return;
+}
+
+if (!form.pickupLocation.trim() || !form.dropLocation.trim()) {
+  toast.error("Pickup and drop location are required");
+  return;
+}
 
     try {
       setLoading(true);
@@ -27,10 +47,9 @@ export default function BookingForm({ vehicle, onBooked }) {
       toast.success("Booking created");
 
       // 2. Create Razorpay order
-      const { data: order } = await api.post("/payments/create-order", {
-        bookingId: booking._id,
-        amount: vehicle.pricePerDay * 100,
-      });
+       const { data: order } = await api.post("/payments/create-order", {
+      bookingId: booking._id,
+    }); 
 
       console.log("Order:", order);
 
@@ -78,43 +97,46 @@ export default function BookingForm({ vehicle, onBooked }) {
     }
   };
 
-  return (
-    <form onSubmit={submitHandler} className="space-y-3 card p-4">
-      <h3 className="text-lg font-bold">Book this vehicle</h3>
+ return (
+  <form onSubmit={submitHandler} className="space-y-3 card p-4">
+    <h3 className="text-lg font-bold">Book this vehicle</h3>
 
-      <input
-        type="date"
-        className="input"
-        value={form.startDate}
-        onChange={(e) => setForm({ ...form, startDate: e.target.value })}
-        required
-      />
+    <input
+      type="date"
+      className="input"
+      min={today}
+      value={form.startDate}
+      onChange={(e) => setForm({ ...form, startDate: e.target.value })}
+      required
+    />
 
-      <input
-        type="date"
-        className="input"
-        value={form.endDate}
-        onChange={(e) => setForm({ ...form, endDate: e.target.value })}
-        required
-      />
+    <input
+      type="date"
+      className="input"
+      min={form.startDate || today}
+      value={form.endDate}
+      onChange={(e) => setForm({ ...form, endDate: e.target.value })}
+      required
+    />
 
-      <input
-        className="input"
-        placeholder="Pickup location"
-        value={form.pickupLocation}
-        onChange={(e) => setForm({ ...form, pickupLocation: e.target.value })}
-      />
+    <input
+      className="input"
+      placeholder="Pickup location"
+      value={form.pickupLocation}
+      onChange={(e) => setForm({ ...form, pickupLocation: e.target.value })}
+      required
+    />
 
-      <input
-        className="input"
-        placeholder="Drop location"
-        value={form.dropLocation}
-        onChange={(e) => setForm({ ...form, dropLocation: e.target.value })}
-      />
+    <input
+      className="input"
+      placeholder="Drop location"
+      value={form.dropLocation}
+      onChange={(e) => setForm({ ...form, dropLocation: e.target.value })}
+      required
+    />
 
-      <button className="btn btn-primary w-full" disabled={loading}>
-        {loading ? "Processing..." : "Book & Pay"}
-      </button>
-    </form>
-  );
-}
+    <button className="btn btn-primary w-full" disabled={loading}>
+      {loading ? "Processing..." : "Book & Pay"}
+    </button>
+  </form>
+)};

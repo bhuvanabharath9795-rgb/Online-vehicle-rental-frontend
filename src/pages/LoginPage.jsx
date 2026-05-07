@@ -15,7 +15,7 @@ export default function LoginPage() {
       const { data } = await api.post("/auth/login", form);
       setUserInfo(data);
       toast.success("Login successful");
-      navigate("/dashboard");
+      navigate("/");
     } catch (error) {
       toast.error(error.response?.data?.message || "Login failed");
     }

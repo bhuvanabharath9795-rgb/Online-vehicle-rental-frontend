@@ -3,7 +3,7 @@ import toast from "react-hot-toast";
 import api from "../services/api";
 
 function AddVehiclePage() {
-  const [form, setForm] = useState({
+  const initialForm = {
     title: "",
     make: "",
     model: "",
@@ -12,19 +12,44 @@ function AddVehiclePage() {
     pricePerDay: "",
     location: "",
     availability: true,
-    images: "",
     description: "",
     fuelType: "",
     transmission: "",
     seats: "",
-  });
+  };
 
+  const [form, setForm] = useState(initialForm);
   const [imageFile, setImageFile] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const submitHandler = async (e) => {
     e.preventDefault();
 
+    const currentYear = new Date().getFullYear();
+
+    if (!form.title || !form.make || !form.model || !form.location || !form.description) {
+      return toast.error("Please fill all required fields");
+    }
+
+    if (Number(form.year) < 2000 || Number(form.year) > currentYear) {
+      return toast.error("Enter a valid vehicle year");
+    }
+
+    if (Number(form.pricePerDay) <= 0) {
+      return toast.error("Price must be greater than 0");
+    }
+
+    if (Number(form.seats) <= 0) {
+      return toast.error("Seats must be greater than 0");
+    }
+
+    if (!imageFile) {
+      return toast.error("Vehicle image is required");
+    }
+
     try {
+      setLoading(true);
+
       const formData = new FormData();
 
       formData.append("title", form.title);
@@ -39,10 +64,7 @@ function AddVehiclePage() {
       formData.append("fuelType", form.fuelType);
       formData.append("transmission", form.transmission);
       formData.append("seats", form.seats);
-
-      if (imageFile) {
-        formData.append("image", imageFile);
-      }
+      formData.append("image", imageFile);
 
       await api.post("/vehicles", formData, {
         headers: {
@@ -50,27 +72,15 @@ function AddVehiclePage() {
         },
       });
 
-      toast.success("Vehicle submitted");
+      toast.success("Vehicle submitted successfully");
 
-      setForm({
-        title: "",
-        make: "",
-        model: "",
-        year: "",
-        type: "Car",
-        pricePerDay: "",
-        location: "",
-        availability: true,
-        images: "",
-        description: "",
-        fuelType: "",
-        transmission: "",
-        seats: "",
-      });
-
+      setForm(initialForm);
       setImageFile(null);
+      e.target.reset();
     } catch (error) {
       toast.error(error.response?.data?.message || "Failed to add vehicle");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -106,6 +116,8 @@ function AddVehiclePage() {
         <input
           className="input"
           type="number"
+          min="2000"
+          max={new Date().getFullYear()}
           placeholder="Year"
           value={form.year}
           onChange={(e) => setForm({ ...form, year: e.target.value })}
@@ -116,6 +128,7 @@ function AddVehiclePage() {
           type="file"
           accept="image/*"
           onChange={(e) => setImageFile(e.target.files[0])}
+          required
         />
 
         <select
@@ -123,17 +136,18 @@ function AddVehiclePage() {
           value={form.type}
           onChange={(e) => setForm({ ...form, type: e.target.value })}
         >
-          <option>Car</option>
-          <option>Bike</option>
-          <option>Scooter</option>
-          <option>SUV</option>
-          <option>Van</option>
-          <option>Truck</option>
+          <option value="Car">Car</option>
+          <option value="Bike">Bike</option>
+          <option value="Scooter">Scooter</option>
+          <option value="SUV">SUV</option>
+          <option value="Van">Van</option>
+          <option value="Truck">Truck</option>
         </select>
 
         <input
           className="input"
           type="number"
+          min="1"
           placeholder="Price per day"
           value={form.pricePerDay}
           onChange={(e) => setForm({ ...form, pricePerDay: e.target.value })}
@@ -165,16 +179,11 @@ function AddVehiclePage() {
         <input
           className="input"
           type="number"
+          min="1"
           placeholder="Seats"
           value={form.seats}
           onChange={(e) => setForm({ ...form, seats: e.target.value })}
-        />
-
-        <input
-          className="input md:col-span-2"
-          placeholder="Images URLs (comma separated)"
-          value={form.images}
-          onChange={(e) => setForm({ ...form, images: e.target.value })}
+          required
         />
 
         <textarea
@@ -185,8 +194,12 @@ function AddVehiclePage() {
           required
         />
 
-        <button className="btn btn-primary md:col-span-2">
-          Submit Vehicle
+        <button
+          type="submit"
+          disabled={loading}
+          className="btn btn-primary md:col-span-2"
+        >
+          {loading ? "Submitting..." : "Submit Vehicle"}
         </button>
       </form>
     </div>
@@ -194,5 +207,3 @@ function AddVehiclePage() {
 }
 
 export default AddVehiclePage;
-
-

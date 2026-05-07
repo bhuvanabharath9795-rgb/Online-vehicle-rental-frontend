@@ -33,24 +33,28 @@ export default function VehicleDetailsPage() {
 
   const { vehicle, reviews, maintenanceRecords } = data;
 
-  // ✅ SAFE VALUES
   const make = vehicle.make || vehicle.brand || "";
-  const model = vehicle.model || "";
-  const title = vehicle.title || `${make} ${model}`.trim();
+const model = vehicle.model || "";
+const title = vehicle.title || `${make} ${model}`.trim();
+
+const vehicleImage =
+  vehicle.image ||
+  (Array.isArray(vehicle.images) ? vehicle.images[0] : vehicle.images) ||
+  "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop";
   console.log(vehicle);
 
   return (
     <div className="grid lg:grid-cols-3 gap-6">
       <div className="lg:col-span-2 space-y-6">
         <div className="card overflow-hidden">
-          <img
-            src={
-              vehicle.image ||
-              "https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop"
-            }
-            alt={title}
-            className="w-full h-80 object-cover"
-          />
+       <img
+             src={vehicleImage}
+             alt={title}
+             className="w-full h-80 object-cover"
+             onError={(e) => {
+             e.currentTarget.src ="https://images.unsplash.com/photo-1492144534655-ae79c964c9d7?q=80&w=1200&auto=format&fit=crop";
+            }}
+      />
 
           <div className="p-6 space-y-3">
             <h1 className="text-3xl font-bold">{title}</h1>

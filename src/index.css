@@ -2,30 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-body {
-  @apply bg-slate-50 text-slate-900;
+@layer components {
+  .container-app {
+    @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+  }
+
+  .card-hover {
+  @apply hover:shadow-2xl hover:-translate-y-2 transition-all duration-300;
 }
 
-.container-app {
-  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+.image-hover {
+  @apply transition-transform duration-500 group-hover:scale-110;
 }
 
-.input {
-  @apply w-full rounded-lg border border-slate-300 px-4 py-2 outline-none focus:ring-2 focus:ring-blue-500;
+.badge {
+  @apply px-3 py-1 rounded-full text-xs font-semibold;
 }
 
-.btn {
-  @apply rounded-lg px-4 py-2 font-semibold transition;
+  .card {
+    @apply bg-white rounded-2xl shadow-md border border-slate-200;
+  }
+
+  .page {
+  @apply space-y-6 px-2 md:px-0;
 }
 
-.btn-primary {
-  @apply bg-blue-600 text-white hover:bg-blue-700;
+.section-title {
+  @apply text-2xl font-extrabold text-slate-900 mb-4;
 }
 
-.btn-danger {
-  @apply bg-red-600 text-white hover:bg-red-700;
+.card-hover {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-xl;
 }
 
-.card {
-  @apply rounded-2xl bg-white shadow-md border border-slate-100;
+.empty-state {
+  @apply text-center text-slate-500 bg-slate-50 border border-dashed rounded-2xl p-6;
+}
+
+.badge-success {
+  @apply px-3 py-1 rounded-full text-xs font-bold bg-green-100 text-green-700;
+}
+
+.badge-danger {
+  @apply px-3 py-1 rounded-full text-xs font-bold bg-red-100 text-red-700;
+}
+
+.badge-warning {
+  @apply px-3 py-1 rounded-full text-xs font-bold bg-yellow-100 text-yellow-700;
+}
+
+  .input {
+    @apply w-full px-4 py-3 border border-slate-300 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500;
+  }
+
+  .btn {
+    @apply px-4 py-2 rounded-xl font-semibold transition disabled:opacity-60 disabled:cursor-not-allowed;
+  }
+
+  .btn-primary {
+    @apply bg-blue-600 text-white hover:bg-blue-700;
+  }
+
+  .btn-danger {
+    @apply bg-red-500 text-white hover:bg-red-600;
+  }
+
+  .btn-secondary {
+    @apply bg-slate-800 text-white hover:bg-slate-900;
+  }
+
+  .badge-success {
+    @apply px-3 py-1 rounded-full text-xs font-semibold bg-green-100 text-green-700;
+  }
+
+  .badge-warning {
+    @apply px-3 py-1 rounded-full text-xs font-semibold bg-yellow-100 text-yellow-700;
+  }
+
+  .badge-danger {
+    @apply px-3 py-1 rounded-full text-xs font-semibold bg-red-100 text-red-700;
+  }
+}
+html,
+body,
+#root {
+  min-height: 100%;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
