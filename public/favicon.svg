@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32">
+  <!-- Orange rounded background -->
+  <rect width="32" height="32" rx="8" fill="url(#bg)"/>
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="32" y2="32" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#c2410c"/>
+      <stop offset="100%" stop-color="#f97316"/>
+    </linearGradient>
+  </defs>
+  <!-- White car icon -->
+  <path
+    d="M5 21h22M5 21a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h1l3-4h12l3 4h1a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2M5 21a2.5 2.5 0 0 0 5 0m12 0a2.5 2.5 0 0 0 5 0M5 21h17"
+    stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"
+  />
+</svg>

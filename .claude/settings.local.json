@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "WebFetch(domain:www.zoomcar.com)",
+      "Bash(copy \"c:\\\\Users\\\\Bhuvana\\\\Downloads\\\\online-rental-vehiclesystem-frontend\\\\src\\\\assets\\\\logo.png\" \"c:\\\\Users\\\\Bhuvana\\\\Downloads\\\\online-rental-vehiclesystem-frontend\\\\public\\\\favicon.png\")"
+    ]
+  }
+}

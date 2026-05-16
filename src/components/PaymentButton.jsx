@@ -10,7 +10,7 @@ export default function PaymentButton({ booking, onSuccess }) {
         key: import.meta.env.VITE_RAZORPAY_KEY,
         amount: data.amount,
         currency: data.currency,
-        name: "VehicleRent",
+        name: "DriveNow",
         description: "Vehicle Booking Payment",
         order_id: data.orderId,
         handler: async function (response) {

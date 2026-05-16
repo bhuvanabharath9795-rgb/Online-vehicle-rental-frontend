@@ -1,6 +1,14 @@
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate, useLocation } from "react-router-dom";
 import { useAuth } from "./context/AuthContext";
 import { useEffect } from "react";
+
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo({ top: 0, behavior: "instant" });
+  }, [pathname]);
+  return null;
+}
 
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
@@ -22,6 +30,7 @@ export default function App() {
 
   return (
     <div className="min-h-screen flex flex-col overflow-x-hidden">
+      <ScrollToTop />
       <Navbar />
 
       <main className="flex-1 w-full max-w-7xl mx-auto px-4 py-6">
